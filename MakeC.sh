@@ -1,13 +1,16 @@
 #!/bin/bash
 
-# Nom du fichier Makefile
 FILE=Makefile
 
 # Nom du programme à compiler (modifiable)
-NAME=my_program
+# NAME=my_program
+echo "Quel est le nom du programme (ex: a.out): "
+read NAME
 
 # Dossier contenant les sources
-SRC_DIR=src
+# SRC_DIR=src
+echo "Quel est le dossier contenant les sources (ex: src): "
+read SRC_DIR
 
 # Cherche les fichiers .c dans SRC_DIR (récursif)
 SRC=$(find $SRC_DIR -name "*.c" | tr '\n' ' ')
