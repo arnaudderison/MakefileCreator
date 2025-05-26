@@ -52,7 +52,7 @@ NAME = $NAME
 SRC = $SRC
 OBJ_DIR = $OBJ_DIR
 OBJS = \$(SRC:%.${EXT}=\$(OBJ_DIR)/%.o)
-CC = $COMPILER# Cherche les fichie# Cherche les fichiers sources (récursivement)s sources (récursivement)
+CC = $COMPILER
 CFLAGS = $FLAGS
 
 all: \$(NAME)
