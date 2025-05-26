@@ -2,13 +2,11 @@
 
 FILE="Makefile"
 
-
 echo "Quel est le nom du programme (ex: a.out) :"
 read NAME
 
 echo "Quel est le dossier contenant les sources (ex: src) :"
 read SRC_DIR
-
 
 if [ ! -d "$SRC_DIR" ]; then
   echo "Erreur : Le dossier '$SRC_DIR' n'existe pas !"
