@@ -1,32 +1,31 @@
 #!/bin/bash
 
 # --- CONFIGURATION ---
-
 FILE="Makefile"
 
 # Demande à l’utilisateur le nom du programme
-echo "Quel est le nom du programme (ex: a.out): "
+echo "Quel est le nom du programme (ex: a.out) :"
 read NAME
 
 # Demande le dossier contenant les sources
-echo "Quel est le dossier contenant les sources (ex: src): "
+echo "Quel est le dossier contenant les sources (ex: src) :"
 read SRC_DIR
 
-# Vérifie si le dossier existe
+# Vérifie si le dossier des sources existe
 if [ ! -d "$SRC_DIR" ]; then
-  echo "Erreur: Le dossier '$SRC_DIR' n'existe pas !"
+  echo "Erreur : Le dossier '$SRC_DIR' n'existe pas !"
   exit 1
 fi
 
 # Demande le dossier des includes (optionnel)
-echo "Quel est le dossier contenant les includes (ex: include) [appuyez sur Entrée si aucun]: "
+echo "Quel est le dossier contenant les includes (ex: include) [laisser vide si aucun] :"
 read INC_DIR
 
-# Demande le langage (C ou C++)
-echo "Quel langage ? (c/cpp) : "
+# Demande le langage (c ou cpp)
+echo "Quel langage ? (c/cpp) :"
 read LANG
 
-# Définit le compilateur et les flags
+# Détermine le compilateur et les flags
 if [ "$LANG" = "c" ]; then
   COMPILER="cc"
   FLAGS="-Wall -Wextra -Werror"
@@ -40,16 +39,19 @@ else
   exit 1
 fi
 
-# Ajoute les includes s’ils existent
+# Ajoute les includes (-I pour tous les sous-dossiers) s’ils existent
 if [ -n "$INC_DIR" ]; then
   if [ ! -d "$INC_DIR" ]; then
-    echo "Erreur: Le dossier '$INC_DIR' n'existe pas !"
+    echo "Erreur : Le dossier '$INC_DIR' n'existe pas !"
     exit 1
   fi
-  FLAGS="$FLAGS -I./$INC_DIR"
+
+  for dir in $(find "$INC_DIR" -type d); do
+    FLAGS="$FLAGS -I./$dir"
+  done
 fi
 
-# Trouve les sources
+# Cherche les fichiers sources (récursivement)
 SRC=$(find "$SRC_DIR" -name "*.$EXT" | tr '\n' ' ')
 OBJ_DIR="obj"
 
@@ -93,4 +95,3 @@ re: fclean all
 EOF
 
 echo "✅ Makefile créé avec succès dans le répertoire : $(pwd)/$FILE"
-
